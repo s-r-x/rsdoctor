@@ -50,6 +50,10 @@ export const WebpackModulesOverallBase: React.FC<
     'bundle-size-tabs-card-expanded',
     false,
   );
+  const [activeTab, setActiveTab] = usePersistedState(
+    'bundle-size-tabs-default-tab',
+    'tree',
+  );
   const cardDomId = useId();
   const expandActionText = expanded ? 'Shrink card' : 'Expand card';
   const { isLight } = useTheme();
@@ -66,6 +70,8 @@ export const WebpackModulesOverallBase: React.FC<
         id={cardDomId}
       >
         <Tabs
+          activeKey={activeTab}
+          onChange={setActiveTab}
           size="middle"
           className={styles.tabsRoot}
           tabBarExtraContent={{
