@@ -87,8 +87,8 @@
   flex: 1;
 
   [role='alert'] {
-    margin: var(--spacing-base);
-    margin-block-end: 0;
+    /* higher top margin to prevent overlapping with the fullscreen button */
+    margin: 50px var(--spacing-base) 0 var(--spacing-base);
   }
 }
 
