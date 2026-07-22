@@ -556,18 +556,13 @@ export const TreeMap: React.FC<TreeMapProps> = memo(
     }, []);
 
     return option ? (
-      <div className={Styles['chart-container']}>
+      <div className={Styles.mainArea}>
         <Alert
           message="If parsed size lacks detailed module information, you can enable sourceMap when RSDOCTOR = true. This is because Rsdoctor relies on SourceMap to obtain Parsed Size. Rspack provides SourceMap information to Rsdoctor by default without affecting the build output."
           type="info"
           showIcon
-          style={{ marginBottom: 0 }}
         />
-        <div
-          style={{
-            flex: 1,
-          }}
-        >
+        <div className={Styles.chartRoot}>
           <EChartsReactCore
             ref={chartRef}
             option={option}
@@ -605,6 +600,9 @@ export const TreeMap: React.FC<TreeMapProps> = memo(
             style={{
               width: '100%',
               height: '100%',
+              position: 'absolute',
+              left: 0,
+              top: 0,
             }}
           />
         </div>
@@ -995,33 +993,27 @@ const AssetTreemapWithFilterInner: React.FC<{
           </div>
         </div>
       </div>
-
-      <div className={Styles['chart-wrapper']}>
-        <TreeMap
-          treeData={filteredTreeData}
-          sizeType={sizeType}
-          onChartClick={handleChartClick}
-          highlightNodeId={highlightNodeId}
-          centerNodeId={centerNodeId}
-          rootPath={rootPath}
-        />
-        {moduleId ? (
-          <ServerAPIProvider
-            api={SDK.ServerAPI.API.GetAllModuleGraph}
-            body={{}}
-          >
-            {(modules) => (
-              <ModuleAnalyzeComponent
-                cwd={rootPath}
-                moduleId={moduleId}
-                modules={modules}
-                show={showAnalyze}
-                setShow={setShowAnalyze}
-              />
-            )}
-          </ServerAPIProvider>
-        ) : null}
-      </div>
+      <TreeMap
+        treeData={filteredTreeData}
+        sizeType={sizeType}
+        onChartClick={handleChartClick}
+        highlightNodeId={highlightNodeId}
+        centerNodeId={centerNodeId}
+        rootPath={rootPath}
+      />
+      {moduleId ? (
+        <ServerAPIProvider api={SDK.ServerAPI.API.GetAllModuleGraph} body={{}}>
+          {(modules) => (
+            <ModuleAnalyzeComponent
+              cwd={rootPath}
+              moduleId={moduleId}
+              modules={modules}
+              show={showAnalyze}
+              setShow={setShowAnalyze}
+            />
+          )}
+        </ServerAPIProvider>
+      ) : null}
     </div>
   );
 };

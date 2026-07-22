@@ -1,7 +1,7 @@
 .treemap {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 100px);
+  flex: 1;
   position: relative;
   overflow: hidden;
   border: 2px solid var(--color-border-secondary);
@@ -29,15 +29,13 @@
   min-width: 300px;
   background-color: var(--color-bg-box-elevated);
   border-right: 1px solid var(--color-border-secondary);
-  display: flex;
-  flex-direction: column;
   transition: transform 0.3s ease;
   z-index: 10;
-  height: 100%;
   position: relative;
   overflow: visible;
 
   &.collapsed {
+    height: 100%;
     transform: translateX(-100%);
     position: absolute;
     left: 0;
@@ -45,9 +43,10 @@
 }
 
 .sidebar-content {
+  position: absolute;
+  inset: 0;
   padding: 15px;
   overflow-y: auto;
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -77,20 +76,22 @@
   }
 }
 
-.chart-wrapper {
-  flex: 1;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-.chart-container {
+.mainArea {
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 100%;
-  height: 100%;
+
+  [role='alert'] {
+    margin: var(--spacing-base);
+    margin-block-end: 0;
+  }
+}
+
+.chartRoot {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-height: var(--treemap-chart-min-height, 300px);
 }
 
 .fullscreen-button {
